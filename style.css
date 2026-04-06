@@ -18,7 +18,7 @@ body, html {
 }
 
 .desktop {
-    background: url('./assets/background.png') no-repeat center center fixed;
+    background: url('/assets/background.png') no-repeat center center fixed;
     background-size: cover;
     height: 100vh;
     position: relative;
@@ -122,7 +122,7 @@ body, html {
     visibility: hidden; 
     transform: translate(-50%, -50%) scale(0.8);
     
-    /* Explicitly name the transitions so dragging left/top isn't delayed */
+    /* We explicitly name the transitions so dragging left/top isn't delayed */
     transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
@@ -263,7 +263,6 @@ body, html {
 }
 
 /* The Status Dot */
-/* To be updated though */
 .status-indicator {
     position: absolute;
     bottom: 2px;
@@ -314,7 +313,7 @@ body, html {
 }
 
 /* Tag adjustments */
- {
+.tag-row {
     display: flex;
     justify-content: left;
     margin-bottom: 10px;
@@ -329,6 +328,7 @@ body, html {
     font-size: 0.85rem;
     color: #222;
     box-shadow: 1px 2px 6px rgba(0,0,0,0.08); /* Makes them look like clickable buttons */
+    margin: 2px;
 }
 
 .full-width { 
@@ -490,54 +490,6 @@ color: #0F4378;
 }
 
 /* =========================================
-   8. PLAYLIST WINDOW SPECIFICS
-========================================= */
-
-/* Make this window narrower than the others */
-.playlist-window {
-    width: 340px; 
-}
-
-.playlist-layout {
-    text-align: center;
-    padding: 30px 20px;
-    background: #eef3f7;
-}
-
-.album-art {
-    width: 140px;
-    height: 140px;
-    border-radius: 50%;
-    border: 3px solid white;
-    object-fit: cover;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    margin-bottom: 20px;
-}
-
-.song-title {
-    font-size: 1.6rem;
-    color: #333;
-    margin: 0 0 5px 0;
-}
-
-.song-artist {
-    font-size: 1rem;
-    color: #555;
-    font-weight: 600;
-    margin: 0 0 25px 0;
-}
-
-
-.time-display {
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.75rem;
-    color: #555;
-    font-weight: bold;
-}
-
-
-/* =========================================
    9. MOBILE RESPONSIVENESS
 ========================================= */
 @media (max-width: 768px) {
@@ -578,8 +530,7 @@ color: #0F4378;
         grid-template-columns: 130px 1fr; 
         gap: 15px;
     }
-
-   /* 1. Prevent the overall layout from stretching */
+    /* 1. Prevent the overall layout from stretching */
     .about-layout {
         width: 100%;
         overflow: hidden; 
@@ -592,7 +543,7 @@ color: #0F4378;
 
     /* 3. Make all skill tags and profile tags wrap to a new line */
     .skill-tags, 
-     {
+    .tag-row {
         display: flex;
         flex-wrap: wrap; 
         gap: 5px;
@@ -622,7 +573,7 @@ color: #0F4378;
     }
 
     /* THE MAGIC FIX: Flex-wrap allows items to drop to the next line */
-    , 
+    .tag-row, 
     .project-links {
         flex-wrap: wrap; 
     }
@@ -660,10 +611,10 @@ color: #0F4378;
     }
 
     .tag-row {
-display: flex;
-    flex-wrap: wrap;       /* Ensures they drop to the next line if they run out of room */
-    justify-content: center; /* This is the magic line that centers them! */
-    gap: 5px;              /* Keeps a little space between them */
+       display: flex;
+       flex-wrap: wrap;       /* Ensures they drop to the next line if they run out of room */
+       justify-content: center; /* This is the magic line that centers them! */
+       gap: 5px;              /* Keeps a little space between them */
     }
 
     .tag-pill, .skill-tags span {
@@ -675,6 +626,7 @@ display: flex;
     .main-name {
         font-size: 1.3rem; /* Smaller main title */
         line-height: 1.1;
+        text-align: center;
     }
 
     .sub-headline {
@@ -685,7 +637,6 @@ display: flex;
         font-size: 0.75rem;
         gap: 8px;
         margin: 10px 0 15px 0;
-       justify-content: left;
     }
 
     .skill-section h3 {
