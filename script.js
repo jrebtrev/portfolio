@@ -89,17 +89,13 @@ windows.forEach(win => {
 // HOVER SOUND EFFECT LOGIC
 // =========================================
 
-// 1. Create the audio object (Make sure to have a sound file in your assets folder!)
-const hoverSound = new Audio('/assets/button-hover.mp3'); 
+const hoverSound = new Audio('./assets/button-hover.mp3'); 
 
-// Optional: Lower the volume so it isn't too overwhelming (0.0 to 1.0)
-hoverSound.volume = 0.2; 
+hoverSound.volume = 0.1; 
 
-// 2. Select all the elements you want to make a sound
 // I included the skill tags, social links, taskbar icons, and buttons!
 const hoverElements = document.querySelectorAll('.tag-pill, .skill-tags span, .social-link-click, .email-btn');
 
-// 3. Add the hover event to each of those elements
 hoverElements.forEach(element => {
     element.addEventListener('mouseenter', () => {
         // Reset the sound to the start so it can play rapidly if moving the mouse quickly
