@@ -1,0 +1,699 @@
+@import url('https://fonts.googleapis.com/css2?family=Itim&display=swap');
+
+/* =========================================
+   1. GLOBAL & SETUP
+========================================= */
+* {
+    font-family: 'Itim', cursive; 
+    font-weight: 400;
+    font-style: normal;
+    box-sizing: border-box; 
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden; /* Prevents scrollbars on the desktop */
+}
+
+.desktop {
+    background: url('/assets/background.png') no-repeat center center fixed;
+    background-size: cover;
+    height: 100vh;
+    position: relative;
+}
+
+/* =========================================
+   2. TASKBAR & ICONS
+========================================= */
+.taskbar {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 120px; /* Height of the floating area + the black bar */
+    background: transparent; /* Let the beautiful ocean background show! */
+    display: flex;
+    align-items: flex-end; /* Aligns everything to the bottom edge... */
+    justify-content: space-between;
+    padding: 0 40px 45px 40px; /* ...but the 45px bottom padding pushes them up! */
+    z-index: 1000; /* Ensures the icons stay on top of the windows if dragged too low */
+}
+
+/* Creates the empty black strip at the very bottom */
+.taskbar::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 35px; /* The thickness of the black bar */
+    background: #1a1a1a; /* Dark charcoal/black */
+    z-index: -1; /* Puts the black bar behind your icons */
+}
+
+.icons-group { 
+    display: flex; 
+    gap: 30px; 
+}
+
+.icon {
+    text-align: center;
+    cursor: pointer;
+    color: white;
+    transition: transform 0.2s ease-in-out; 
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+}
+
+.icon:hover {
+    transform: scale(1.1) translateY(-8px); 
+}
+
+.icon img { 
+    width: 60px; /* Adjusted size for the folder icons */
+    display: block; 
+    margin-bottom: 5px; 
+}
+
+.icon span {
+    font-size: 1.1rem;
+    text-shadow: 1px 1px 4px rgba(0,0,0,0.8); /* Stronger shadow to pop against the blue ocean */
+}
+
+.portfolio-name {
+    font-size: 1.6rem; 
+    color: white;
+    text-shadow: 2px 2px 5px rgba(0,0,0,0.8); 
+    margin-bottom: 5px; /* Aligns it nicely with the text of the icons */
+}
+
+/* =========================================
+   Date and Time Display
+========================================= */
+.datetime-display {
+    position: absolute;
+    bottom: 5px;   /* Centers it perfectly inside the 35px black bar */
+    right: 40px;   /* Keeps it aligned with the right side of the screen */
+    color: #e0e0e0; /* Slightly off-white to look more like a real system clock */
+    text-align: right;
+    font-size: 0.75rem;
+    line-height: 1.2;
+    z-index: 1001; /* Ensures it sits on top of the black background bar */
+    letter-spacing: 0.5px;
+}
+
+/* =========================================
+   3. WINDOW BASE STYLES
+========================================= */
+.window {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 600px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    
+    /* Starting state for animation */
+    opacity: 0;
+    visibility: hidden; 
+    transform: translate(-50%, -50%) scale(0.8);
+    
+    /* We explicitly name the transitions so dragging left/top isn't delayed */
+    transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.window.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, -55%) scale(1);
+}
+
+.window-header {
+    background: #333;
+    color: white;
+    padding: 10px 15px;
+    display: flex;
+    justify-content: space-between;
+    cursor: grab; /* Shows the grab hand */
+    user-select: none; /* Stops text from highlighting while dragging */
+}
+
+.window-header:active {
+    cursor: grabbing; /* Closes the hand when clicked */
+}
+
+.close-btn { 
+    background: none; 
+    border: none; 
+    color: white; 
+    cursor: pointer; 
+}
+
+.window-content {
+    background: #eef3f7; 
+    padding: 20px 25px;
+    color: #333;
+}
+
+/* =========================================
+   4. WORK WINDOW SPECIFICS
+========================================= */
+.section-title {
+    font-size: 1.1rem;
+    color: #4a4a4a;
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+.project-links {
+    display: flex;
+    gap: 10px;
+}
+
+.project-card {
+    display: flex;
+    gap: 20px; 
+    margin-bottom: 25px; 
+}
+
+.project-image {
+    width: 200px; 
+    height: 120px; 
+    object-fit: cover; 
+    background-color: white; 
+}
+
+.project-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.project-title {
+    font-size: 1.1rem;
+    color: #333;
+    margin: 0 0 10px 0;
+}
+
+.project-description {
+    font-size: 0.85rem;
+    color: #555;
+    line-height: 1.4;
+    margin: 0 0 15px 0;
+}
+
+.preview-btn {
+    background: white;
+    border: 1px solid #ddd;
+    padding: 6px 16px;
+    font-size: 0.8rem;
+    color: #555;
+    cursor: pointer;
+    border-radius: 2px;
+    box-shadow: 1px 1px 4px rgba(0,0,0,0.1); 
+    align-self: flex-start; 
+}
+
+.other-projects-list {
+    margin: 0;
+    padding-left: 20px;
+    font-size: 0.9rem;
+    color: #333;
+}
+
+/* =========================================
+   5. ABOUT WINDOW SPECIFICS
+========================================= */
+.about-layout {
+    display: grid;
+    grid-template-columns: 200px 1fr; /* Made the left column slightly wider for the tags */
+    gap: 30px;
+}
+
+/* --- Left Column: Profile Card --- */
+.profile-card {
+    background: white;
+    padding: 20px 15px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centers everything perfectly */
+}
+
+/* Container must be relative so the dot can be absolute to it */
+.profile-img-container {
+    width: 110px; 
+    height: 110px;
+    position: relative; 
+    margin-bottom: 8px;
+}
+
+.profile-img-container img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 1px solid #333; 
+    object-fit: cover;
+}
+
+/* The Status Dot */
+.status-indicator {
+    position: absolute;
+    bottom: 2px;
+    right: 5px;
+    width: 24px;
+    height: 24px;
+    background-color: #cb5a5e; /* Discord 'Do Not Disturb' Red */
+    border-radius: 50%;
+    border: 3px solid white; /* Creates the transparent "cutout" effect against the image */
+}
+
+/* Tightening the text spacing */
+.profile-title-group {
+    margin-bottom: 15px;
+}
+
+.profile-name-small {
+    font-size: 1.2rem;
+    margin: 0; /* Removes default space */
+    color: #333;
+}
+
+.level-text {
+    font-size: 0.9rem;
+    margin: 2px 0 0 0; /* Tiny gap below the name */
+    color: #333;
+}
+
+/* Styling for the clickable GitHub link */
+.social-link-click {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #5b42f3; 
+    text-decoration: none !important; /* This is the magic line that removes the underline */
+    transition: opacity 0.2s ease; 
+}
+
+.social-link-click:hover {
+    opacity: 0.7; 
+}
+
+.quote { 
+    font-size: 0.8rem; 
+    line-height: 1.4;
+    margin: 0 0 15px 0; 
+    color: #444;
+}
+
+/* Tag adjustments */
+.tag-row {
+    display: flex;
+    justify-content: left;
+    margin-bottom: 10px;
+}
+
+.tag-pill, .skill-tags span {
+    display: inline-block;
+    background: white;
+    border: 1px solid #e0e0e0;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    color: #222;
+    box-shadow: 1px 2px 6px rgba(0,0,0,0.08); /* Makes them look like clickable buttons */
+    margin: 2px;
+}
+
+.full-width { 
+    display: block; 
+    width: 100%; 
+}
+
+/* --- Right Column: Details --- */
+.main-name { 
+    font-size: 1.8rem;
+    color: #333; 
+    margin: 15px 0 1px 0; 
+}
+
+.sub-headline { 
+color: #0F4378;
+    font-size: 1.05rem;
+    margin: 0; 
+    text-align: center; 
+}
+
+.social-links {
+    margin: 10px 0 25px 0;
+    display: flex;
+    flex-direction: row; /* Puts Discord and Email side-by-side */
+    gap: 10px;
+    font-size: 0.9rem;
+    justify-content: center;
+}
+
+.social-links span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #5b42f3; 
+}
+
+.skill-section h3 {
+    font-size: 0.8rem;
+    color: #111;
+    text-decoration: underline;
+    margin-bottom: 8px;
+    margin-top: 20px;
+}
+
+/* =========================================
+   6. CONTACT WINDOW SPECIFICS
+========================================= */
+/* Centers the white card exactly in the middle of the window */
+.contact-layout {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px; 
+}
+
+.contact-card {
+    background: white;
+    padding: 40px 20px;
+    border-radius: 4px; /* Slightly sharper corners to match your design */
+    text-align: center;
+    box-shadow: 2px 2px 15px rgba(0,0,0,0.08);
+    width: 100%;
+    max-width: 480px;
+}
+
+.contact-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 1px solid #333;
+    object-fit: cover;
+    margin-bottom: 15px;
+}
+
+.contact-greeting {
+    color: #0F4378;
+    font-size: 2rem;
+    margin: 0 0 15px 0;
+}
+
+.contact-text {
+    color: #444;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin: 0 0 20px 0;
+}
+
+.email-highlight {
+    color: #5b42f3; /* The purple-blue email color */
+}
+
+/* Styling the 'a' tag to look exactly like a button */
+.email-btn {
+    display: inline-block;
+    background: white;
+    border: 1px solid #ddd;
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    color: #333;
+    text-decoration: none; /* Removes the default blue link underline */
+    border-radius: 4px;
+    box-shadow: 1px 2px 5px rgba(0,0,0,0.1);
+    transition: transform 0.1s, box-shadow 0.1s;
+    margin-top: 10px;
+}
+
+/* Makes the button feel "clickable" */
+.email-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 1px 4px 8px rgba(0,0,0,0.15);
+}
+
+.email-btn:active {
+    transform: translateY(0);
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+}
+
+/* =========================================
+   7. GLOBAL BUTTON ANIMATIONS
+========================================= */
+
+/* 1. Add the transition timer to the elements so they move smoothly */
+.preview-btn, 
+.tag-pill, 
+.skill-tags span {
+    transition: transform 0.1s, box-shadow 0.1s;
+    cursor: pointer; /* Ensures the mouse turns into a pointer finger */
+}
+
+/* 2. The Hover State: Pops up slightly and increases shadow */
+.preview-btn:hover, 
+.tag-pill:hover, 
+.skill-tags span:hover {
+    transform: translateY(-2px);
+    box-shadow: 1px 4px 8px rgba(0,0,0,0.15);
+}
+
+/* 3. The Active State: Presses down when clicked */
+.preview-btn:active, 
+.tag-pill:active, 
+.skill-tags span:active {
+    transform: translateY(0);
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+}
+
+/* 4. Special Animation for the [x] Close Buttons */
+.close-btn {
+    transition: transform 0.1s, color 0.1s;
+}
+
+.close-btn:hover {
+    transform: scale(1.2); /* Grows slightly larger */
+    color: #ff6b6b; /* Turns a soft red to indicate 'close' */
+}
+
+.close-btn:active {
+    transform: scale(0.9); /* Shrinks when clicked */
+}
+
+/* =========================================
+   8. PLAYLIST WINDOW SPECIFICS
+========================================= */
+
+/* Make this window narrower than the others */
+.playlist-window {
+    width: 340px; 
+}
+
+.playlist-layout {
+    text-align: center;
+    padding: 30px 20px;
+    background: #eef3f7;
+}
+
+.album-art {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    border: 3px solid white;
+    object-fit: cover;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+.song-title {
+    font-size: 1.6rem;
+    color: #333;
+    margin: 0 0 5px 0;
+}
+
+.song-artist {
+    font-size: 1rem;
+    color: #555;
+    font-weight: 600;
+    margin: 0 0 25px 0;
+}
+
+
+.time-display {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: #555;
+    font-weight: bold;
+}
+
+
+/* =========================================
+   9. MOBILE RESPONSIVENESS
+========================================= */
+@media (max-width: 768px) {
+    
+/* Move Portfolio Name to the top left and lower z-index */
+    .portfolio-name {
+        position: fixed;
+        top: 25px;
+        left: 25px;
+        font-size: 1.8rem;
+        z-index: 10; /* Lowered this so the active window floats ON TOP of it */
+    }
+
+    /* Center the Taskbar Icons */
+    .taskbar {
+        justify-content: center; /* Centers the icons since the title moved */
+        padding: 0 20px 45px 20px;
+    }
+
+/* Give the window a little more width on mobile to fit the two columns */
+    .window {
+        width: 95%;
+        max-width: 500px; 
+        max-height: 75vh; 
+        display: flex;
+        flex-direction: column; 
+    }
+
+    .window-content {
+        padding: 15px;
+        overflow-y: auto; 
+        flex-grow: 1; 
+    }
+
+    /* --- ABOUT WINDOW MOBILE --- */
+    .about-layout {
+        /* Forces the 2-column layout, giving the left card 130px and the right the rest */
+        grid-template-columns: 130px 1fr; 
+        gap: 15px;
+    }
+
+/* --- WORK WINDOW MOBILE FIXES --- */
+    .project-card {
+        flex-direction: column; 
+        gap: 15px;
+        width: 100%; /* Ensures the card respects the window padding */
+        overflow: hidden; /* Clips anything trying to escape the card */
+    }
+
+    .project-image {
+        width: 100%; 
+        max-width: 100%; /* Prevents the image from forcing a wider width */
+        height: auto; 
+        max-height: 200px;
+        object-fit: cover; /* Ensures the image doesn't stretch weirdly */
+        border-radius: 4px;
+    }
+
+    /* THE MAGIC FIX: Flex-wrap allows items to drop to the next line */
+    .tag-row, 
+    .project-links {
+        flex-wrap: wrap; 
+    }
+
+    /* Optional: Make buttons fill the width on super narrow phones */
+    .project-links .preview-btn {
+        flex-grow: 1; 
+        text-align: center;
+    }
+
+    .profile-img-container {
+        width: 75px;  /* Smaller picture */
+        height: 75px;
+    }
+
+    .status-indicator {
+        width: 18px; /* Smaller status dot */
+        height: 18px;
+        border-width: 2px;
+        bottom: 0px;
+        right: 2px;
+    }
+
+    .profile-name-small {
+        font-size: 1.05rem; /* Smaller name */
+    }
+
+    .level-text {
+        font-size: 0.8rem;
+    }
+
+    .quote {
+        font-size: 0.65rem; /* Smaller quote so it fits without stretching */
+        margin-bottom: 10px;
+    }
+
+    .tag-row {
+        gap: 5px;
+    }
+
+    .tag-pill, .skill-tags span {
+        padding: 4px 6px;
+        font-size: 0.7rem; /* Smaller tags */
+    }
+
+    /* 2. Shrink the Right Details Column */
+    .main-name {
+        font-size: 1.3rem; /* Smaller main title */
+        line-height: 1.1;
+    }
+
+    .sub-headline {
+        font-size: 0.85rem;
+    }
+
+    .social-links {
+        font-size: 0.75rem;
+        gap: 8px;
+        margin: 10px 0 15px 0;
+    }
+
+    .skill-section h3 {
+        margin-top: 10px;
+        font-size: 0.75rem;
+    }
+
+    /* --- CONTACT WINDOW MOBILE --- */
+    .contact-card {
+        padding: 25px 15px;
+    }
+
+    .contact-avatar {
+        width: 90px;
+        height: 90px;
+    }
+
+    .contact-greeting {
+        font-size: 1.6rem;
+    }
+
+    .contact-text {
+        font-size: 0.85rem;
+    }
+}
+
+/* =========================================
+   10. RESUME WINDOW SPECIFICS
+========================================= */
+.resume-window {
+    width: 800px; /* Wider to show the document properly */
+    max-width: 95%;
+    height: 80vh; /* Taller to fit the letter aspect ratio */
+}
+
+.resume-layout {
+    height: calc(100% - 40px); /* Fills the window minus the header height */
+    overflow: hidden; /* Prevents double scrollbars with the PDF */
+}
+

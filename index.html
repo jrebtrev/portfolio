@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trev's Portfolio</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="desktop">
+        <div id="window-resume" class="window resume-window">
+            <div class="window-header">
+                <span>Resume</span>
+                <button class="close-btn" onclick="closeWindow('window-resume')">[x]</button>
+            </div>
+            <div class="window-content resume-layout" style="padding: 0;">
+                <iframe src="/assets/resume.pdf" width="100%" height="100%" style="border: none;"></iframe>
+            </div>
+        </div>
+      <div id="window-work" class="window">
+        <div class="window-header">
+          <span>Work</span>
+          <button class="close-btn" onclick="closeWindow('window-work')">
+            [x]
+          </button>
+        </div>
+        <div class="window-content">
+          <h3 class="section-title">In Development</h3>
+
+          <div class="project-card">
+            <img
+              src="/assets/hero-hands.avif"
+              alt="Project Thumbnail"
+              class="project-image"
+            />
+
+<div class="project-details">
+                <h3 class="project-title">Anonymous Thoughts Journal</h3>
+                                <div class="tag-row">
+                    <span class="tag-pill">HTML/CSS</span>
+                    <span class="tag-pill">JavaScript</span>
+                    <span class="tag-pill">Firebase</span>
+                </div>
+                <p class="project-description">
+                    A real-time, anonymous guestbook where users can share their thoughts and quotes. Built to demonstrate frontend UI and cloud database integration.
+                </p>
+
+                <div class="project-links">
+                    <!-- <button class="preview-btn" onclick="window.open('https://your-live-link.vercel.app', '_blank')">Live Demo</button>
+                    <button class="preview-btn" onclick="window.open('https://github.com/jrebtrev/your-repo', '_blank')">GitHub</button> -->
+                </div>
+            </div>
+          </div>
+
+          <h3 class="section-title">Other Projects</h3>
+          <ul class="other-projects-list">
+            <li>Coming soon...</li>
+          </ul>
+        </div>
+      </div>
+
+      <div id="window-about" class="window">
+        <div class="window-header">
+          <span>About</span>
+          <button class="close-btn" onclick="closeWindow('window-about')">
+            [x]
+          </button>
+        </div>
+        <div class="window-content about-layout">
+          <div class="profile-card">
+            <div class="profile-img-container">
+              <img src="/assets/icon-profile.jpg" alt="Trev" />
+              <div class="status-indicator"></div>
+            </div>
+
+            <div class="profile-title-group">
+              <h2 class="profile-name-small"><u>Trev</u></h2>
+              <p class="level-text">Level 23</p>
+            </div>
+
+            <p class="quote">
+              "Jack of all trades,<br />bad at everything—<br />yet somehow
+              versatile<br />in my failures."
+            </p>
+
+            <div class="status-tags">
+              <div class="tag-row">
+                <span class="tag-pill">Single</span>
+                <span class="tag-pill">Weirdo</span>
+              </div>
+              <span class="tag-pill full-width">Computer Science</span>
+            </div>
+          </div>
+
+          <div class="details-col">
+            <h1 class="main-name">John Trevanian Abellera</h1>
+            <p class="sub-headline">Inspiring Developer & Content Creator</p>
+            <div class="social-links">
+              <span>
+                <a
+                  href="https://github.com/jrebtrev"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="social-link-click"
+                >
+                  <img src="/assets/icon-github.svg" width="16" alt="GitHub" />
+                  jrebtrev
+                </a>
+              </span>
+              <span
+                ><img src="/assets/icon-at.svg" width="16" />
+                tjabellera29@gmail.com</span
+              >
+            </div>
+
+            <section class="skill-section">
+              <h3>DEVELOPMENT</h3>
+              <div class="skill-tags">
+                <span>HTML</span><span>CSS</span><span>JavaScript</span
+                ><span>Python</span>
+              </div>
+            </section>
+
+            <section class="skill-section">
+              <h3>TOOLS</h3>
+              <div class="skill-tags">
+                <span>Figma</span><span>Canva</span><span>Capcut</span>
+              </div>
+            </section>
+
+            <section class="skill-section">
+              <h3>OTHER INTERESTS</h3>
+              <div class="skill-tags">
+                <span>Game Development</span><span>Music</span
+                ><span>Novels</span><span>Videography</span>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+      <div id="window-contact" class="window">
+        <div class="window-header">
+          <span>Contact</span>
+          <button class="close-btn" onclick="closeWindow('window-contact')">
+            [x]
+          </button>
+        </div>
+        <div class="window-content contact-layout">
+          <div class="contact-card">
+            <img
+              src="/assets/icon-mail.jpg"
+              alt="Trev Saluting"
+              class="contact-avatar"
+            />
+
+            <h2 class="contact-greeting">Hey yo!</h2>
+
+            <p class="contact-text">
+              the easiest way to contact me is through email!<br />
+              I don't really check my social media messages, so please direct<br />
+              questions to my email instead 👍
+            </p>
+
+            <p class="contact-text">
+              email me at:
+              <span class="email-highlight">tjabellera29@gmail.com</span><br />
+              or press the button below to open your mail app.
+            </p>
+
+            <a href="mailto:tjabellera29@gmail.com" class="email-btn"
+              >Send me an email!</a>
+          </div>
+        </div>
+      </div>
+    </div>
+          <div class="time-display">
+            <span id="current-time">1:57</span>
+            <span id="duration">4:28</span>
+          </div>
+    </div>
+    <nav class="taskbar">
+      <div class="icons-group">
+        <div class="icon" onclick="toggleWindow('window-work')">
+          <img src="/assets/icon_work.webp" alt="Work" />
+          <span>Work</span>
+        </div>
+        <div class="icon" onclick="toggleWindow('window-about')">
+          <img src="/assets/icon_work.webp" alt="About" /> <span>About</span>
+        </div>
+        <div class="icon" onclick="toggleWindow('window-contact')">
+          <img src="/assets/icon_contact.webp" alt="Contact" />
+          <span>Contact</span>
+        </div>
+        <div class="icon" onclick="toggleWindow('window-resume')">
+                <img src="/assets/icon_work.webp" alt="Resume">
+                <span>Resume</span>
+            </div>
+      </div>
+      <div class="portfolio-name">Trev's Portfolio</div>
+      <div id="datetime-display" class="datetime-display">
+        <div id="clock-time">12:00am</div>
+        <div id="clock-date">01/01/2026</div>
+      </div>
+    </nav>
+
+    <script src="script.js"></script>
+  </body>
+</html>
