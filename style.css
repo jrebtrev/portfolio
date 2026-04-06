@@ -314,7 +314,7 @@ body, html {
 }
 
 /* Tag adjustments */
-.tag-row {
+ {
     display: flex;
     justify-content: left;
     margin-bottom: 10px;
@@ -592,7 +592,7 @@ color: #0F4378;
 
     /* 3. Make all skill tags and profile tags wrap to a new line */
     .skill-tags, 
-    .tag-row {
+     {
         display: flex;
         flex-wrap: wrap; 
         gap: 5px;
@@ -622,7 +622,7 @@ color: #0F4378;
     }
 
     /* THE MAGIC FIX: Flex-wrap allows items to drop to the next line */
-    .tag-row, 
+    , 
     .project-links {
         flex-wrap: wrap; 
     }
@@ -660,7 +660,10 @@ color: #0F4378;
     }
 
     .tag-row {
-        gap: 5px;
+display: flex;
+    flex-wrap: wrap;       /* Ensures they drop to the next line if they run out of room */
+    justify-content: center; /* This is the magic line that centers them! */
+    gap: 5px;              /* Keeps a little space between them */
     }
 
     .tag-pill, .skill-tags span {
